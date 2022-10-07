@@ -36,7 +36,9 @@ categorys = {
 }
 
 url = 'https://forum.gamer.com.tw/B.php?bsn={}'
-title = input('你想要查詢什麼(先在dictionary上找到你想要的版，然後複製版的名字並貼上)：')
+
+title = "場外休憩區"
+
 print("-------------------------")
     # 在 categorys 中尋找編號
 target = categorys.get(title)
@@ -47,7 +49,6 @@ else:
     sys.exit("你所輸入的版名目前沒有收納喔~敬請期待日後更新")
 
 # 開啟/創建 test.text 文件夾
-file = open("test.txt", mode="w", encoding="utf-8")
 
 import bs4
 
@@ -61,12 +62,15 @@ class BahaCrawler(scrapy.Spider):
     def parse(self, response):
         root = bs4.BeautifulSoup(response.body)
         titles = root.find_all("div", class_="b-list__tile")
+        file = open("test.txt", mode="w", encoding="utf-8")
         for i in titles:
             if(i.p != None):
                 print(i.p.text)
                 file.write(i.p.text)
                 file.write("\n")
-        file.close()    
-
-
+        file.write(final_url)
+        file.close()
+    
 # 執行：scrapy crawl <name> (ex: Baha)
+
+# you have to run the reactor yourself
