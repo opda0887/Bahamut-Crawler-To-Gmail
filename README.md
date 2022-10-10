@@ -10,7 +10,7 @@
 ![img](https://i.imgur.com/mdxCfEh.png)
 
 ## 👌**使用說明(Features)**:  
-
+Wait for update...
 
 
 If you have any feedbacks, just contact me (≧∀≦)
