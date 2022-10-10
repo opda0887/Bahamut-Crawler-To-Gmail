@@ -1,5 +1,11 @@
+import ssl
+from tkinter.tix import Form
+from venv import create
 import scrapy
 import sys  # 關閉程式用的
+from email.message import EmailMessage
+import ssl
+import smtplib
 
     # 資料聚集處
 categorys = {
@@ -63,13 +69,36 @@ class BahaCrawler(scrapy.Spider):
         root = bs4.BeautifulSoup(response.body)
         titles = root.find_all("div", class_="b-list__tile")
         file = open("test.txt", mode="w", encoding="utf-8")
+        content = ''
         for i in titles:
             if(i.p != None):
+                content += f"{i.p.text}\n"
                 print(i.p.text)
                 file.write(i.p.text)
                 file.write("\n")
+        content += f"{final_url}"
         file.write(final_url)
         file.close()
+
+        # send email
+        email_sender = '<sender>'
+        email_password = '<yourpassword>'
+        email_receiver = '<receiver>'
+        subject = '巴哈爬蟲結果'
+        body = content
+        em = EmailMessage()
+        em['From'] = email_sender
+        em['To'] = email_receiver
+        em['Subject'] = subject
+        em.set_content(body)
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, email_password)
+            smtp.sendmail(email_sender, email_receiver, em.as_string())
+
+
     
 # 執行：scrapy crawl <name> (ex: Baha)
 

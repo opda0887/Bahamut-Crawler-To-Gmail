@@ -5,7 +5,7 @@ from scrapy.crawler import CrawlerRunner
 from Baha.spiders.clawer import BahaCrawler
 
 # 可自由調整時間
-timeSet = 30
+timeSet = 60
 
 def runCrawl():
 
